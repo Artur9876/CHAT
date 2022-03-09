@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Sketch</title>
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-
+    
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.js"></script>
-    <script src="p5.min.js"></script>
-    <script src="p5.sound.min.js"></script>
+    
+    <script src="jquery.js"></script>
     <script src="app.js"></script>
     
     
@@ -22,6 +21,27 @@
 
   <body>
     
+      <input id="text" type="text" placeholder="Type something...">
+      <button id="button" onclick="getInputValue();">SEND</button>
+      
+      <script>
+        document.getElementById("text")
+            .addEventListener("keyup", function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById("button").click();
+                    document.getElementById("text").value="";
+                }
+            });
+         
+        
+      </script>
+    
+    <table>
+      <tbody></tbody>
+    </table>
+  
+  
   </body>
+  
 </html>
 

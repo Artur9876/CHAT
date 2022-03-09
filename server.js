@@ -1,19 +1,26 @@
+function Client (id)
+{
+    this.id = id;
+}
 
-var express = require('express');
+let clients = [];
 
-var app = express();
+const express = require('express');
 
-var server = app.listen(process.env.PORT || 80, listen);
+
+const app = express();
+
+const server = app.listen(process.env.PORT || 3000, listen);
 
 function listen() {
-  var host = server.address().address;
-  var port = server.address().port;
+  const host = server.address().address;
+  const port = server.address().port;
   console.log('Example app listening at http://' + host + ':' + port);
 }
 
 app.use(express.static('public'));
 
-var io = require('socket.io')(server);
+const io = require('socket.io')(server);
 
 
 
@@ -23,13 +30,27 @@ io.sockets.on('connection',
   // We are given a websocket object in our function
   function (socket) {
     
+    let client = new Client(socket.id);
+    clients.push(client);
     
-    console.log("We have a new client: " + socket.id);
+
+    socket.on('message', function(inputVal) {
+      
+        for (i=0; i < clients.length; i++)
+            if (socket.id !== clients[i].id)
+                io.to(clients[i].id).emit('sendMessage', inputVal); 
+         
+        
+        
+        
+      });
     
     
     socket.on('disconnect', function() {
       
-      console.log("Client has disconnected");
+        for (i=0; i < clients.length; i++)
+            if (socket.id === clients[i].id)
+                clients.splice(i, 1);  
       
       
       
