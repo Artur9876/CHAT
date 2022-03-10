@@ -44,6 +44,16 @@ io.sockets.on('connection',
         
         
       });
+
+      socket.on('typing', function() {
+        
+        for (i=0; i < clients.length; i++)
+            if (socket.id !== clients[i].id)
+              io.to(clients[i].id).emit('typing'); 
+        
+        
+        
+      });
     
     
     socket.on('disconnect', function() {
